@@ -44,4 +44,4 @@ checkpoints/
 *.parquet
 
 # Data (optional - if you don't want to track data files)
-# data/
+data/

@@ -1,0 +1,6 @@
+[submodule "BARS"]
+	path = BARS
+	url = https://github.com/reczoo/BARS.git
+[submodule "FuxiCTR"]
+	path = FuxiCTR
+	url = https://github.com/reczoo/FuxiCTR.git
