@@ -1,0 +1,52 @@
+FM_criteo_x1_001_bea53d16:
+    batch_size: 4096
+    dataset_id: criteo_x1_7b681156
+    debug: false
+    embedding_dim: 10
+    epochs: 100
+    every_x_epochs: 1
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: FM
+    model_id: FM_base
+    model_root: ./Criteo/FM_criteo_x1/
+    monitor: AUC
+    monitor_mode: max
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    regularizer: 5.0e-06
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+FM_criteo_x1_002_d1066fb4:
+    batch_size: 4096
+    dataset_id: criteo_x1_7b681156
+    debug: false
+    embedding_dim: 10
+    epochs: 100
+    every_x_epochs: 1
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: FM
+    model_id: FM_base
+    model_root: ./Criteo/FM_criteo_x1/
+    monitor: AUC
+    monitor_mode: max
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    regularizer: 5.0e-05
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1

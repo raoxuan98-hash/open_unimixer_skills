@@ -1,0 +1,279 @@
+DeepFM_movielenslatest_x1_001_d3b7dd02:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.2
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_002_f2eb3420:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_003_fa935af2:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_004_fea6b906:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.01
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.2
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_005_0f6d2e8e:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.01
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_006_88b0aa97:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.01
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_007_ec5360cf:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.05
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.2
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_008_83637a57:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.05
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+DeepFM_movielenslatest_x1_009_29d21e5a:
+    batch_norm: true
+    batch_size: 4096
+    dataset_id: movielenslatest_x1_cd32d937
+    debug: false
+    embedding_dim: 10
+    embedding_regularizer: 0.05
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    hidden_units: [400, 400, 400]
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [AUC, logloss]
+    model: DeepFM
+    model_id: DeepFM_base
+    model_root: ./Movielens/DeepFM_movielenslatest_x1/
+    monitor: AUC
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    num_workers: 3
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2021
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1

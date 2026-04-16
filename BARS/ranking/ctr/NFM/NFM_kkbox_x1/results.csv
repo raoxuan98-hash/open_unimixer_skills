@@ -1,0 +1,1 @@
+ 20220308-090720,[command] python run_expid.py --version pytorch --config KKBox/NFM_kkbox_x1/NFM_kkbox_x1_tuner_config_03 --expid NFM_kkbox_x1_015_cbae7b1e --gpu 6,[exp_id] NFM_kkbox_x1_015_cbae7b1e,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.510013 - AUC: 0.828591,[test] logloss: 0.510179 - AUC: 0.828495

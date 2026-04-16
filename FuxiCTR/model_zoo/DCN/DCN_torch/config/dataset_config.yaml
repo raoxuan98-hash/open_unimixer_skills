@@ -1,0 +1,15 @@
+### KuaiVideo Dataset for CTR Prediction
+KuaiVideo_x1:
+    data_root: ../../../data/kuaivideo/
+    data_format: csv
+    train_data: ../../../data/kuaivideo/train.csv
+    valid_data: ../../../data/kuaivideo/valid.csv
+    test_data: ../../../data/kuaivideo/test.csv
+
+### Tiny data for tests only
+tiny_parquet:
+    data_root: ../../../data/
+    data_format: parquet
+    train_data: ../../../data/tiny_parquet/train.parquet
+    valid_data: ../../../data/tiny_parquet/valid.parquet
+    test_data: ../../../data/tiny_parquet/test.parquet

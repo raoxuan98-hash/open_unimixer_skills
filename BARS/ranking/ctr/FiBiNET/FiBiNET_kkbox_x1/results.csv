@@ -1,0 +1,1 @@
+ 20220311-220235,[command] python run_expid.py --version pytorch --config KKBox/FiBiNET_kkbox_x1/FiBiNET_kkbox_x1_tuner_config_03 --expid FiBiNET_kkbox_x1_007_f8ea597b --gpu 6,[exp_id] FiBiNET_kkbox_x1_007_f8ea597b,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.481706 - AUC: 0.849737,[test] logloss: 0.481384 - AUC: 0.849932

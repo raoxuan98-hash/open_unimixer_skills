@@ -1,0 +1,1 @@
+ 20220308-075211,[command] python run_expid.py --version pytorch --config KKBox/xDeepFM_kkbox_x1/xDeepFM_kkbox_x1_tuner_config_03 --expid xDeepFM_kkbox_x1_019_49197bdf --gpu 2,[exp_id] xDeepFM_kkbox_x1_019_49197bdf,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.477735 - AUC: 0.853019,[test] logloss: 0.477164 - AUC: 0.853498

@@ -1,0 +1,1 @@
+ 20220701-221948,[command] python run_expid.py --version pytorch --config Criteo/AutoInt_criteo_x1/AutoInt+_criteo_x1_tuner_config_08 --expid AutoInt_criteo_x1_005_a4b5787e --gpu 4,[exp_id] AutoInt_criteo_x1_005_a4b5787e,[dataset_id] criteo_x1_7b681156,[train] N.A.,[val] AUC: 0.813597 - logloss: 0.438378,[test] AUC: 0.813939 - logloss: 0.437892

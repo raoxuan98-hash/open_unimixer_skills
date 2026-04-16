@@ -1,0 +1,1 @@
+ 20220704-103147,[command] python run_expid.py --version pytorch --config Frappe/AutoInt_frappe_x1/AutoInt+_frappe_x1_tuner_config_06 --expid AutoInt_frappe_x1_006_dba8e61c --gpu 1,[exp_id] AutoInt_frappe_x1_006_dba8e61c,[dataset_id] frappe_x1_04e961e9,[train] N.A.,[val] AUC: 0.985379 - logloss: 0.145408,[test] AUC: 0.984812 - logloss: 0.149007

@@ -1,0 +1,1386 @@
+xDeepFM_kkbox_x1_001_aa6a68bc:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_002_07bef1ce:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_003_5c656368:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_004_5cd7b060:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_005_f66680b9:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_006_3f38d455:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_007_94719af3:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_008_550ab36c:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_009_0722f84c:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_010_d602e488:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_011_2c68014d:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_012_09a40d3f:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_013_f40e5348:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_014_0551cb34:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_015_5a97f058:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_016_22629b2b:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_017_20b5da2c:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_018_761225af:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_019_49197bdf:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_020_e312d576:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_021_d6468436:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_022_935d7b7d:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_023_80171ac0:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_024_dacdde39:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_025_3f7730bd:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_026_6056fbb1:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_027_f91b5033:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_028_b45def28:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.0005
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_029_7b52dc39:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_030_419119bf:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_031_48997a59:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_032_6d63bf28:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_033_b26829f5:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_034_dc1aa8d2:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_035_bb50c401:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_036_febfda92:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [32, 32]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_037_9184113c:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_038_203e1bf7:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [10, 10, 10]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_039_5e5484a4:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_040_7d4c2dd9:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [13, 13, 13]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_041_f4cdad8b:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.3
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3
+xDeepFM_kkbox_x1_042_cf93a1e6:
+    batch_norm: false
+    batch_size: 10000
+    cin_layer_units: [16, 16, 16]
+    dataset_id: kkbox_x1_227d337d
+    debug: false
+    dnn_hidden_units: [5000, 5000]
+    embedding_dim: 128
+    embedding_dropout: 0
+    embedding_regularizer: 0.001
+    epochs: 100
+    every_x_epochs: 1
+    hidden_activations: relu
+    learning_rate: 0.001
+    loss: binary_crossentropy
+    metrics: [logloss, AUC]
+    model: xDeepFM
+    model_id: xDeepFM_base
+    model_root: ./KKBox/xDeepFM_kkbox_x1/
+    monitor: {AUC: 1, logloss: -1}
+    monitor_mode: max
+    net_dropout: 0.4
+    net_regularizer: 0
+    optimizer: adam
+    patience: 2
+    pickle_feature_encoder: true
+    save_best_only: true
+    seed: 2019
+    shuffle: true
+    task: binary_classification
+    use_hdf5: true
+    verbose: 1
+    workers: 3

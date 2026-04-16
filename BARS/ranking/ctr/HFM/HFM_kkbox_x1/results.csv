@@ -1,0 +1,1 @@
+ 20220311-162803,[command] python run_expid.py --version pytorch --config KKBox/HFM_kkbox_x1/HFM_kkbox_x1_tuner_config_03 --expid HFM_kkbox_x1_006_b549df4b --gpu 5,[exp_id] HFM_kkbox_x1_006_b549df4b,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.497235 - AUC: 0.838981,[test] logloss: 0.496967 - AUC: 0.839165

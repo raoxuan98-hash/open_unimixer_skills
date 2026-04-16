@@ -1,0 +1,1 @@
+ 20220704-121100,[command] python run_expid.py --version pytorch --config Avazu/AutoInt_avazu_x1/AutoInt+_avazu_x1_tuner_config_06 --expid AutoInt_avazu_x1_005_73d0b026 --gpu 4,[exp_id] AutoInt_avazu_x1_005_73d0b026,[dataset_id] avazu_x1_3fb65689,[train] N.A.,[val] AUC: 0.746459 - logloss: 0.396205,[test] AUC: 0.764524 - logloss: 0.366815

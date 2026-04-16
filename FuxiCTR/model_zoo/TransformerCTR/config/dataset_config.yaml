@@ -1,0 +1,19 @@
+frappe_x1:
+    data_format: csv
+    data_root: /Users/raoxuan/kuaishou/unimixer/unimixer_open_datasets/data/
+    feature_cols:
+    - {active: true, dtype: str, name: user, type: categorical}
+    - {active: true, dtype: str, name: item, type: categorical}
+    - {active: true, dtype: str, name: daytime, type: categorical}
+    - {active: true, dtype: str, name: weekday, type: categorical}
+    - {active: true, dtype: str, name: isweekend, type: categorical}
+    - {active: true, dtype: str, name: homework, type: categorical}
+    - {active: true, dtype: str, name: cost, type: categorical}
+    - {active: true, dtype: str, name: weather, type: categorical}
+    - {active: true, dtype: str, name: country, type: categorical}
+    - {active: true, dtype: str, name: city, type: categorical}
+    label_col: {dtype: float, name: label}
+    min_categr_count: 1
+    test_data: /Users/raoxuan/kuaishou/unimixer/unimixer_open_datasets/data/Frappe_x1/test.csv
+    train_data: /Users/raoxuan/kuaishou/unimixer/unimixer_open_datasets/data/Frappe_x1/train.csv
+    valid_data: /Users/raoxuan/kuaishou/unimixer/unimixer_open_datasets/data/Frappe_x1/valid.csv

@@ -1,0 +1,1 @@
+ 20220309-065224,[command] python run_expid.py --version pytorch --config KKBox/CrossNet_kkbox_x1/CrossNet_kkbox_x1_tuner_config_01 --expid DCN_kkbox_x1_024_b363d48e --gpu 1,[exp_id] DCN_kkbox_x1_024_b363d48e,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.528826 - AUC: 0.811269,[test] logloss: 0.528343 - AUC: 0.811639

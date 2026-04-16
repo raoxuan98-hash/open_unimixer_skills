@@ -1,0 +1,1 @@
+ 20240611-160845,[command] python run_expid.py --config ./DNN_avazu_x1_tuner_config_01 --expid DNN_avazu_x1_001_3da2d674 --gpu 0,[exp_id] DNN_avazu_x1_001_3da2d674,[dataset_id] avazu_x1_3fb65689,[train] N.A.,[val] AUC: 0.746336 - logloss: 0.396527,[test] AUC: 0.763827 - logloss: 0.367394

@@ -1,0 +1,1 @@
+ 20220123-132619,[command] python run_expid.py --version pytorch --config Frappe/DCNv2_frappe_x1/CrossNetv2_frappe_x1_tuner_config_02 --expid DCNv2_frappe_x1_001_881fe47a --gpu 0,[exp_id] DCNv2_frappe_x1_001_881fe47a,[dataset_id] frappe_x1_04e961e9,[train] N.A.,[val] AUC: 0.973658 - logloss: 0.217769,[test] AUC: 0.972914 - logloss: 0.221563

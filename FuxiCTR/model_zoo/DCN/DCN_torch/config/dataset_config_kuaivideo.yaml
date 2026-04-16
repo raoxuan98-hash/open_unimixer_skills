@@ -1,0 +1,24 @@
+### KuaiVideo Dataset Configuration
+# 基于快手发布的 KuaiVideo 数据集格式
+# 用于 CTR 预测任务
+
+KuaiVideo_x1:
+    data_root: ../../../data/kuaivideo/
+    data_format: csv
+    train_data: ../../../data/kuaivideo/train.csv
+    valid_data: ../../../data/kuaivideo/valid.csv
+    test_data: ../../../data/kuaivideo/test.csv
+    # 特征配置
+    feature_cols:
+        - {name: user_id, type: categorical}
+        - {name: video_id, type: categorical}
+        - {name: author_id, type: categorical}
+        - {name: category, type: categorical}
+        - {name: tag, type: categorical}
+        - {name: music_id, type: categorical}
+        - {name: device_type, type: categorical}
+        - {name: timestamp, type: numeric}
+    label_col: click
+    # 数据预处理配置
+    min_category_count: 1
+    fill_na: ""

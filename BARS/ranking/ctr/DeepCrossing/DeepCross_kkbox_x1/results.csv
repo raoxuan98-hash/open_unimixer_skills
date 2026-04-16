@@ -1,0 +1,1 @@
+ 20220309-162117,[command] python run_expid.py --version pytorch --config KKBox/DeepCrossing_kkbox_x1/DeepCrossing_kkbox_x1_tuner_config_02 --expid DeepCrossing_kkbox_x1_022_34237390 --gpu 5,[exp_id] DeepCrossing_kkbox_x1_022_34237390,[dataset_id] kkbox_x1_227d337d,[train] N.A.,[val] logloss: 0.480752 - AUC: 0.848992,[test] logloss: 0.479949 - AUC: 0.849486
