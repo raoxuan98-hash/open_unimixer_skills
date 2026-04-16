@@ -69,6 +69,24 @@ python run_expid.py --config ./config --expid MyExp --gpu -1
 - AFM
 - 更多...
 
+## 大规模实验（6 模型 × 4 数据集）
+
+本项目提供了统一配置生成和批量运行脚本，支持在 4 个数据集（MovielensLatest、Frappe、KuaiVideo、TaobaoAd）上同时评估 6 个自定义模型（HeteroAttention、RankMixer、HiFormer、FAT、TokenMixerLarge、UniMixerLite）。
+
+```bash
+# 生成统一实验配置
+python scripts/generate_unified_configs.py
+
+# 预览所有实验命令（不实际运行）
+python scripts/run_all_unified.py --dry-run
+
+# 启动全部实验
+python scripts/run_all_unified.py --gpu 0
+
+# 只运行特定模型或数据集
+python scripts/run_all_unified.py --model UniMixer_lite --dataset frappe_x1 --gpu 0
+```
+
 ## 相关项目
 
 - [FuxiCTR](https://github.com/reczoo/FuxiCTR) - CTR 预测深度学习框架
