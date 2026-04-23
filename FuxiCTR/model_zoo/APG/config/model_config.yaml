@@ -18,7 +18,7 @@ APG_DeepFM_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     hidden_units: [64, 32]
     hidden_activations: relu
     net_regularizer: 0
@@ -50,7 +50,7 @@ APG_DeepFM: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     hidden_units: [300, 300, 300]
     hidden_activations: relu
     net_regularizer: 0
@@ -82,7 +82,7 @@ APG_DCNv2_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     model_structure: parallel
     use_low_rank_mixture: False
     low_rank: 32
@@ -120,7 +120,7 @@ APG_DCNv2: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     model_structure: parallel
     use_low_rank_mixture: False
     low_rank: 32

@@ -18,7 +18,7 @@ WideDeep_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     hidden_units: [64, 32]
     hidden_activations: relu
@@ -40,7 +40,7 @@ WideDeep_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     hidden_units: [300, 300, 300]
     hidden_activations: relu

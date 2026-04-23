@@ -20,7 +20,34 @@ import numpy as np
 import h5py
 from tqdm import tqdm
 import polars as pl
-from keras_preprocessing.sequence import pad_sequences
+def pad_sequences(sequences, maxlen, value=0, padding='pre', truncating='pre', dtype='int32'):
+    """Drop-in replacement for keras_preprocessing.sequence.pad_sequences,
+    compatible with NumPy 2.0+.
+    """
+    if not sequences:
+        return np.zeros((0, maxlen), dtype=dtype)
+    num_samples = len(sequences)
+    x = np.full((num_samples, maxlen), value, dtype=dtype)
+    for i, seq in enumerate(sequences):
+        if not seq:
+            continue
+        # truncation
+        if len(seq) > maxlen:
+            if truncating == 'post':
+                truncated = seq[:maxlen]
+            else:
+                truncated = seq[-maxlen:]
+        else:
+            truncated = seq
+        # padding
+        if len(truncated) < maxlen:
+            if padding == 'post':
+                x[i, :len(truncated)] = truncated
+            else:
+                x[i, -len(truncated):] = truncated
+        else:
+            x[i, :] = truncated
+    return x
 from concurrent.futures import ProcessPoolExecutor, as_completed
 import multiprocessing as mp
 

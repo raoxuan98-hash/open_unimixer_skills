@@ -18,7 +18,7 @@ DMIN_test:
     loss: 'binary_crossentropy'
     metrics: ['AUC', 'logloss']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0
@@ -56,7 +56,7 @@ DMIN_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['AUC', 'logloss']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0

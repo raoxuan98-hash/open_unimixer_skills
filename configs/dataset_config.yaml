@@ -1,6 +1,6 @@
 movielenslatest_x1:
   data_format: csv
-  data_root: /home/raoxuan/projects/open_unimixer_skills/data
+  data_root: ./download_datasets/Movielenslatest_x1
   feature_cols:
   - active: true
     dtype: str
@@ -18,12 +18,13 @@ movielenslatest_x1:
     dtype: float
     name: label
   min_categr_count: 1
-  test_data: /home/raoxuan/projects/open_unimixer_skills/data/MovielensLatest_x1/test.csv
-  train_data: /home/raoxuan/projects/open_unimixer_skills/data/MovielensLatest_x1/train.csv
-  valid_data: /home/raoxuan/projects/open_unimixer_skills/data/MovielensLatest_x1/valid.csv
+  test_data: ./download_datasets/Movielenslatest_x1/test.csv
+  train_data: ./download_datasets/Movielenslatest_x1/train.csv
+  valid_data: ./download_datasets/Movielenslatest_x1/valid.csv
+
 frappe_x1:
   data_format: csv
-  data_root: /home/raoxuan/projects/open_unimixer_skills/data
+  data_root: ./download_datasets/Frappe_x1
   feature_cols:
   - active: true
     dtype: str
@@ -69,12 +70,13 @@ frappe_x1:
     dtype: float
     name: label
   min_categr_count: 1
-  test_data: /home/raoxuan/projects/open_unimixer_skills/data/Frappe_x1/test.csv
-  train_data: /home/raoxuan/projects/open_unimixer_skills/data/Frappe_x1/train.csv
-  valid_data: /home/raoxuan/projects/open_unimixer_skills/data/Frappe_x1/valid.csv
+  test_data: ./download_datasets/Frappe_x1/test.csv
+  train_data: ./download_datasets/Frappe_x1/train.csv
+  valid_data: ./download_datasets/Frappe_x1/valid.csv
+
 kuaivideo_x1:
   data_format: csv
-  data_root: /home/raoxuan/projects/open_unimixer_skills/data
+  data_root: ./download_datasets/data/Kuaivideo_x1
   feature_cols:
   - active: true
     dtype: int
@@ -82,7 +84,7 @@ kuaivideo_x1:
     preprocess: copy_from(user_id)
     remap: false
     type: meta
-  - active: true
+  - active: true  
     dtype: str
     name: user_id
     type: categorical
@@ -96,7 +98,7 @@ kuaivideo_x1:
     min_categr_count: 1
     name: item_emb
     preprocess: copy_from(item_id)
-    pretrained_emb: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5
+    pretrained_emb: ./download_datasets/Kuaivideo_x1/item_visual_emb_dim64.h5
     type: categorical
   - active: true
     dtype: str
@@ -122,7 +124,7 @@ kuaivideo_x1:
     name: pos_items_emb
     padding: pre
     preprocess: copy_from(pos_items)
-    pretrained_emb: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5
+    pretrained_emb: ./download_datasets/Kuaivideo_x1/item_visual_emb_dim64.h5
     share_embedding: item_emb
     splitter: ^
     type: sequence
@@ -134,7 +136,7 @@ kuaivideo_x1:
     name: neg_items_emb
     padding: pre
     preprocess: copy_from(neg_items)
-    pretrained_emb: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5
+    pretrained_emb: ./download_datasets/Kuaivideo_x1/item_visual_emb_dim64.h5
     share_embedding: item_emb
     splitter: ^
     type: sequence
@@ -142,9 +144,9 @@ kuaivideo_x1:
     dtype: float
     name: is_click
   min_categr_count: 10
-  test_data: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/test.csv
-  train_data: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/train.csv
-  valid_data: /home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/test.csv
+  test_data: ./download_datasets/Kuaivideo_x1/test.csv
+  train_data: ./download_datasets/Kuaivideo_x1/train.csv
+  valid_data: ./download_datasets/Kuaivideo_x1/valid.csv
   feature_specs:
   - feature_encoder: nn.Linear(64, 64, bias=False)
     name: item_emb
@@ -162,7 +164,7 @@ kuaivideo_x1:
     name: neg_items_emb
 taobaoad_x1:
   data_format: csv
-  data_root: /home/raoxuan/projects/open_unimixer_skills/data
+  data_root: ./download_datasets/TaobaoAd_x1
   feature_cols:
   - active: true
     dtype: int
@@ -222,12 +224,12 @@ taobaoad_x1:
     dtype: float
     name: clk
   min_categr_count: 10
-  test_data: /home/raoxuan/projects/open_unimixer_skills/data/TaobaoAd_x1/test.csv
-  train_data: /home/raoxuan/projects/open_unimixer_skills/data/TaobaoAd_x1/train.csv
-  valid_data: /home/raoxuan/projects/open_unimixer_skills/data/TaobaoAd_x1/test.csv
+  test_data: ./download_datasets/TaobaoAd_x1/test.csv
+  train_data: ./download_datasets/TaobaoAd_x1/train.csv
+  valid_data: ./download_datasets/TaobaoAd_x1/valid.csv
 microvideo1.7m_x1:
   data_format: csv
-  data_root: /home/raoxuan/projects/open_unimixer_skills/data
+  data_root: ./download_datasets/Microvideo_x1
   feature_cols:
   - active: true
     dtype: int
@@ -243,7 +245,7 @@ microvideo1.7m_x1:
     dtype: str
     embedding_dim: 64
     name: item_id
-    pretrained_emb: /home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/item_image_emb_dim64.h5
+    pretrained_emb: ./download_datasets/Microvideo_x1/item_image_emb_dim64.h5
     type: categorical
   - active: true
     dtype: str
@@ -255,7 +257,7 @@ microvideo1.7m_x1:
     max_len: 100
     name: clicked_items
     padding: pre
-    pretrained_emb: /home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/item_image_emb_dim64.h5
+    pretrained_emb: ./download_datasets/Microvideo_x1/item_image_emb_dim64.h5
     splitter: ^
     type: sequence
   - active: true
@@ -274,6 +276,6 @@ microvideo1.7m_x1:
     dtype: float
     name: is_click
   min_categr_count: 1
-  test_data: /home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/test.csv
-  train_data: /home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/train.csv
-  valid_data: /home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/test.csv
+  test_data: ./download_datasets/Microvideo_x1/test.csv
+  train_data: ./download_datasets/Microvideo_x1/train.csv
+  valid_data: ./download_datasets/Microvideo_x1/valid.csv

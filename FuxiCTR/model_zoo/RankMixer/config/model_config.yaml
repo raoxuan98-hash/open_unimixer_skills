@@ -14,7 +14,7 @@ Base:
 RankMixer_movielenslatest_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -43,7 +43,7 @@ RankMixer_movielenslatest_x1_unified:
 RankMixer_frappe_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -72,7 +72,7 @@ RankMixer_frappe_x1_unified:
 RankMixer_kuaivideo_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -105,7 +105,7 @@ RankMixer_kuaivideo_x1_unified:
 RankMixer_taobaoad_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.001
   net_regularizer: 1.0e-05
@@ -138,7 +138,7 @@ RankMixer_taobaoad_x1_unified:
 RankMixer_microvideo1.7m_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.001
   net_regularizer: 1.0e-05

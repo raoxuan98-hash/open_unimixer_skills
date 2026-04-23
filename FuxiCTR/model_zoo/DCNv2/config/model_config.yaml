@@ -19,7 +19,7 @@ DCNv2_movielens_test:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -52,7 +52,7 @@ DCNv2_test:
     - logloss
     - AUC
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -85,7 +85,7 @@ DCNv2_default:
     - logloss
     - AUC
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -122,7 +122,7 @@ DCNv2_frappe_test:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -159,7 +159,7 @@ DCNv2_kuaivideo_x1_008_7047bff3:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -238,7 +238,7 @@ DCNv2_taobaoad_x1_unified:
   num_cross_layers: 4
   num_experts: 4
   num_workers: 3
-  optimizer: adam
+  optimizer: adamw
   ordered_features:
   parallel_dnn_hidden_units:
     - 512
@@ -263,7 +263,7 @@ DCNv2_movielenslatest_x1_unified:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -292,7 +292,7 @@ DCNv2_frappe_x1_unified:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -322,7 +322,7 @@ DCNv2_kuaivideo_x1_unified:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32
@@ -353,7 +353,7 @@ DCNv2_microvideo1.7m_x1_unified:
     - AUC
     - logloss
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   model_structure: parallel
   use_low_rank_mixture: false
   low_rank: 32

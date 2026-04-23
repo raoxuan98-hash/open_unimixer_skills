@@ -18,7 +18,7 @@ DCN_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 1.e-8
     net_regularizer: 0
@@ -41,7 +41,7 @@ DCN_KuaiVideo_x1:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 1.e-7
     net_regularizer: 0
@@ -71,7 +71,7 @@ DCN_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0

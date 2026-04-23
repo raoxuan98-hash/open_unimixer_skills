@@ -89,6 +89,7 @@ UNIFIED_ALIGNMENT = {
         # "net_regularizer": 1e-3,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
+        "optimizer": "adamw",
     },
 
     "kuaivideo_x1": {
@@ -102,6 +103,7 @@ UNIFIED_ALIGNMENT = {
         "net_regularizer": 3e-5,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
+        "optimizer": "adamw",
     },
 
     "taobaoad_x1": {
@@ -115,6 +117,7 @@ UNIFIED_ALIGNMENT = {
         "net_regularizer": 3e-5,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
+        "optimizer": "adamw",
     },
 
     "microvideo1.7m_x1": {
@@ -128,6 +131,7 @@ UNIFIED_ALIGNMENT = {
         "net_regularizer": 3e-05,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
+        "optimizer": "adamw",
     },
 }
 

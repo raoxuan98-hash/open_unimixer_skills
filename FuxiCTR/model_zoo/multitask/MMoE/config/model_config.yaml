@@ -21,7 +21,7 @@ MMoE_default:
     metrics: ['logloss', 'AUC']
     task: ['binary_classification','binary_classification']
     num_tasks: 2
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     num_experts: 8
     expert_hidden_units: [512,256,128]
@@ -48,7 +48,7 @@ MMoE_test:
     metrics: ['logloss', 'AUC']
     task: ['binary_classification','binary_classification']
     num_tasks: 2
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     num_experts: 8
     expert_hidden_units: [512,256,128]

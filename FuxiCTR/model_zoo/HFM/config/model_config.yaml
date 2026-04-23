@@ -18,7 +18,7 @@ HFM_test:
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     interaction_type: circular_convolution
     use_dnn: False
@@ -42,7 +42,7 @@ HFM_default: # This is a config template
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     interaction_type: circular_convolution
     use_dnn: False

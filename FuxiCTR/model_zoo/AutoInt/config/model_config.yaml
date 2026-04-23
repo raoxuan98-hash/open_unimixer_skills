@@ -18,7 +18,7 @@ AutoInt_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 1.e-8
     net_regularizer: 0
@@ -47,7 +47,7 @@ AutoInt_default:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 0
     net_regularizer: 0

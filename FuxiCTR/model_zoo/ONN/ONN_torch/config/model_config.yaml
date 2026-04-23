@@ -18,7 +18,7 @@ ONN_test:
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 1.e-8
     net_regularizer: 0
@@ -40,7 +40,7 @@ ONN_default: # This is a config template
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 0
     net_regularizer: 0
@@ -62,7 +62,7 @@ ONNv2_test:
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 0
     net_regularizer: 0
@@ -84,7 +84,7 @@ ONNv2_default: # This is a config template
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.e-3
     embedding_regularizer: 0
     net_regularizer: 0

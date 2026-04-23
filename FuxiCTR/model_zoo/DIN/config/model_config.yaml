@@ -18,7 +18,7 @@ DIN_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0
@@ -46,7 +46,7 @@ DIN_test2:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0
@@ -74,7 +74,7 @@ DIN_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     embedding_regularizer: 0
     net_regularizer: 0

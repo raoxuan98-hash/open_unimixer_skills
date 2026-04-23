@@ -18,7 +18,7 @@ FmFM_test:
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     regularizer: 0
     field_interaction_type: matrixed
@@ -36,7 +36,7 @@ FmFM_default: # This is a config template
     loss: binary_crossentropy
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     learning_rate: 1.0e-3
     regularizer: 0
     field_interaction_type: matrixed

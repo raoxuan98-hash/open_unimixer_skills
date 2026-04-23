@@ -18,7 +18,7 @@ EulerNet_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     shape: [20]
     net_ex_dropout: 0.0
     net_im_dropout: 0.0
@@ -40,7 +40,7 @@ EulerNet_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     shape: [52]
     net_ex_dropout: 0.1
     net_im_dropout: 0.1

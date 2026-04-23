@@ -109,7 +109,7 @@ def generate_configs():
                         "loss": "binary_crossentropy",
                         "metrics": ["AUC", "logloss"],
                         "task": "binary_classification",
-                        "optimizer": "adam",
+                        "optimizer": "adamw",
                         "learning_rate": 0.001,
                         "embedding_regularizer": 0,
                         "net_regularizer": 0,

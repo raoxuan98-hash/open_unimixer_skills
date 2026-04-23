@@ -14,7 +14,7 @@ Base:
 WuKong_movielenslatest_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -45,7 +45,7 @@ WuKong_movielenslatest_x1_unified:
 WuKong_frappe_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -76,7 +76,7 @@ WuKong_frappe_x1_unified:
 WuKong_kuaivideo_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.005
   net_regularizer: 5.0e-05
@@ -111,7 +111,7 @@ WuKong_kuaivideo_x1_unified:
 WuKong_taobaoad_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.001
   net_regularizer: 1.0e-05
@@ -146,7 +146,7 @@ WuKong_taobaoad_x1_unified:
 WuKong_microvideo1.7m_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
-  optimizer: adam
+  optimizer: adamw
   learning_rate: 0.001
   embedding_regularizer: 0.001
   net_regularizer: 1.0e-05

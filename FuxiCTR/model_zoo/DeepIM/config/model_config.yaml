@@ -18,7 +18,7 @@ DeepIM_test:
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     im_order: 2
     im_batch_norm: False
     hidden_units: [64, 32]
@@ -42,7 +42,7 @@ DeepIM_default: # This is a config template
     loss: 'binary_crossentropy'
     metrics: ['logloss', 'AUC']
     task: binary_classification
-    optimizer: adam
+    optimizer: adamw
     im_order: 2
     im_batch_norm: False
     hidden_units: [300, 300, 300]

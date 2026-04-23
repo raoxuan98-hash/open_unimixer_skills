@@ -20,6 +20,7 @@ wheels/
 .installed.cfg
 *.egg
 
+configs/dataset_config.yaml
 results/
 hyperparam_search_results/
 KuaiVideo_x1/
