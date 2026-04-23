@@ -45,6 +45,8 @@ def get_optimizer(optimizer, params, lr):
     if isinstance(optimizer, str):
         if optimizer.lower() == "adam":
             optimizer = "Adam"
+        elif optimizer.lower() == "adamw":
+            optimizer = "AdamW"
     try:
         optimizer = getattr(torch.optim, optimizer)(params, lr=lr)
     except:

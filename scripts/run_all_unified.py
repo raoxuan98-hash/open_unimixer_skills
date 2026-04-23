@@ -5,19 +5,19 @@ Batch runner for all unified large-scale experiments.
 
 Usage:
   # Run all models on all datasets
-  python run_all_unified.py
+  python scripts/run_all_unified.py
 
   # Run specific model
-  python run_all_unified.py --model HeteroAttention
+  python scripts/run_all_unified.py --model HeteroAttention
 
   # Run specific dataset
-  python run_all_unified.py --dataset frappe_x1
+  python scripts/run_all_unified.py --dataset frappe_x1
 
   # Run with GPU
-  python run_all_unified.py --gpu 0
+  python scripts/run_all_unified.py --gpu 0
 
   # Dry run (print commands without executing)
-  python run_all_unified.py --dry-run
+  python scripts/run_all_unified.py --dry-run
 """
 
 import os
@@ -27,46 +27,61 @@ import argparse
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent.parent
-FUXICTR_ROOT = PROJECT_ROOT / "FuxiCTR"
+sys.path.insert(0, str(PROJECT_ROOT / "main"))
 
-MODELS = ["HeteroAttention", "RankMixer", "HiFormer", "FAT", "TokenMixer_Large", "UniMixer_lite"]
-DATASETS = ["movielenslatest_x1", "frappe_x1", "kuaivideo_x1", "taobaoad_x1"]
+from run_expid import run_experiment, MODEL_CLASS_MAP
 
-CLASS_NAMES = {
-    "HeteroAttention": "HeteroAttention",
-    "RankMixer": "RankMixer",
-    "HiFormer": "HiFormer",
-    "FAT": "FAT",
-    "TokenMixer_Large": "TokenMixerLarge",
-    "UniMixer_lite": "UniMixerLite",
-}
+MODELS = ["HeteroAttention", "RankMixer", "HiFormer", "FAT", "TokenMixer_Large", "UniMixer_lite", "TransformerCTR"]
+DATASETS = ["movielenslatest_x1", "frappe_x1", "kuaivideo_x1", "taobaoad_x1", "microvideo1.7m_x1"]
 
 
-def run_experiment(model_name, dataset_id, gpu, dry_run):
-    class_name = CLASS_NAMES[model_name]
+def run_single(model_name, dataset_id, gpu, dry_run, use_model_entry=False):
+    class_name = MODEL_CLASS_MAP[model_name]
     exp_id = f"{class_name}_{dataset_id}_unified"
-    model_dir = FUXICTR_ROOT / "model_zoo" / model_name
-    run_script = model_dir / "run_expid.py"
-    config_dir = model_dir / "config"
 
-    cmd = [
-        sys.executable,
-        str(run_script),
-        "--config", str(config_dir),
-        "--expid", exp_id,
-        "--gpu", str(gpu),
-    ]
+    if use_model_entry:
+        cmd = [
+            sys.executable,
+            str(PROJECT_ROOT / "FuxiCTR" / "model_zoo" / model_name / "run_expid.py"),
+            "--expid", exp_id,
+            "--gpu", str(gpu),
+        ]
+    else:
+        cmd = [
+            sys.executable,
+            str(PROJECT_ROOT / "main" / "run_expid.py"),
+            "--model", model_name,
+            "--expid", exp_id,
+            "--gpu", str(gpu),
+        ]
 
     print(f"\n{'='*70}")
-    print(f"[{model_name}] -> {dataset_id} | expid={exp_id}")
+    entry = "model-entry" if use_model_entry else "main-entry"
+    print(f"[{model_name}] -> {dataset_id} | expid={exp_id} | via={entry}")
     print(f"{'='*70}")
 
     if dry_run:
         print("DRY RUN:", " ".join(cmd))
         return 0
 
-    result = subprocess.run(cmd, cwd=str(model_dir))
-    return result.returncode
+    if use_model_entry:
+        # Use subprocess for model entry to avoid sys.path/src pollution
+        env = os.environ.copy()
+        if gpu >= 0:
+            env["CUDA_VISIBLE_DEVICES"] = str(gpu)
+        else:
+            env["CUDA_VISIBLE_DEVICES"] = ""
+        result = subprocess.run(cmd, cwd=str(PROJECT_ROOT / "FuxiCTR" / "model_zoo" / model_name), env=env)
+        return result.returncode
+    else:
+        # Direct function call via main entry
+        if gpu >= 0:
+            os.environ["CUDA_VISIBLE_DEVICES"] = str(gpu)
+            inner_gpu = 0
+        else:
+            os.environ["CUDA_VISIBLE_DEVICES"] = ""
+            inner_gpu = -1
+        return run_experiment(model_name, exp_id, inner_gpu)
 
 
 def main():
@@ -75,6 +90,8 @@ def main():
     parser.add_argument("--dataset", type=str, default="all", help="Dataset id or 'all'")
     parser.add_argument("--gpu", type=int, default=-1, help="GPU index")
     parser.add_argument("--dry-run", action="store_true", help="Print commands without running")
+    parser.add_argument("--use-model-entry", action="store_true",
+                        help="Run via each model's own run_expid.py instead of main/run_expid.py")
     args = parser.parse_args()
 
     target_models = MODELS if args.model == "all" else [args.model]
@@ -89,7 +106,7 @@ def main():
             if dataset_id not in DATASETS:
                 print(f"[ERROR] Unknown dataset: {dataset_id}")
                 continue
-            ret = run_experiment(model_name, dataset_id, args.gpu, args.dry_run)
+            ret = run_single(model_name, dataset_id, args.gpu, args.dry_run, args.use_model_entry)
             status = "OK" if ret == 0 else f"FAILED (code={ret})"
             results.append((model_name, dataset_id, status))
 

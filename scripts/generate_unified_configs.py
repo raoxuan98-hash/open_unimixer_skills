@@ -63,11 +63,11 @@ DATASETS = {
             {"active": True, "dtype": "int", "name": "group_id", "preprocess": "copy_from(user_id)", "remap": False, "type": "meta"},
             {"active": True, "dtype": "str", "name": "user_id", "type": "categorical"},
             {"active": True, "dtype": "str", "name": "item_id", "type": "categorical"},
-            {"active": True, "dtype": "str", "embedding_dim": 64, "min_categr_count": 1, "name": "item_emb", "preprocess": "copy_from(item_id)", "pretrained_emb": "../data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "type": "categorical"},
+            {"active": True, "dtype": "str", "embedding_dim": 64, "min_categr_count": 1, "name": "item_emb", "preprocess": "copy_from(item_id)", "pretrained_emb": "/home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "type": "categorical"},
             {"active": True, "dtype": "str", "max_len": 100, "name": "pos_items", "padding": "pre", "share_embedding": "item_id", "splitter": "^", "type": "sequence"},
             {"active": True, "dtype": "str", "max_len": 100, "name": "neg_items", "padding": "pre", "share_embedding": "item_id", "splitter": "^", "type": "sequence"},
-            {"active": True, "dtype": "str", "embedding_dim": 64, "max_len": 100, "min_categr_count": 1, "name": "pos_items_emb", "padding": "pre", "preprocess": "copy_from(pos_items)", "pretrained_emb": "../data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "share_embedding": "item_emb", "splitter": "^", "type": "sequence"},
-            {"active": True, "dtype": "str", "embedding_dim": 64, "max_len": 100, "min_categr_count": 1, "name": "neg_items_emb", "padding": "pre", "preprocess": "copy_from(neg_items)", "pretrained_emb": "../data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "share_embedding": "item_emb", "splitter": "^", "type": "sequence"},
+            {"active": True, "dtype": "str", "embedding_dim": 64, "max_len": 100, "min_categr_count": 1, "name": "pos_items_emb", "padding": "pre", "preprocess": "copy_from(pos_items)", "pretrained_emb": "/home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "share_embedding": "item_emb", "splitter": "^", "type": "sequence"},
+            {"active": True, "dtype": "str", "embedding_dim": 64, "max_len": 100, "min_categr_count": 1, "name": "neg_items_emb", "padding": "pre", "preprocess": "copy_from(neg_items)", "pretrained_emb": "/home/raoxuan/projects/open_unimixer_skills/data/KuaiShou/KuaiVideo_x1/item_visual_emb_dim64.h5", "share_embedding": "item_emb", "splitter": "^", "type": "sequence"},
         ],
         "feature_specs": [
             {"feature_encoder": "nn.Linear(64, 64, bias=False)", "name": "item_emb"},
@@ -108,9 +108,30 @@ DATASETS = {
         "metrics": ["gAUC", "AUC", "logloss"],
         "monitor": {"AUC": 1, "gAUC": 1},
     },
+    "microvideo1.7m_x1": {
+        "data_root": str(DATA_ROOT),
+        "feature_cols": [
+            {"active": True, "dtype": "int", "name": "group_id", "preprocess": "copy_from(user_id)", "remap": False, "type": "meta"},
+            {"active": True, "dtype": "str", "name": "user_id", "type": "categorical"},
+            {"active": True, "dtype": "str", "embedding_dim": 64, "name": "item_id", "pretrained_emb": "/home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/item_image_emb_dim64.h5", "type": "categorical"},
+            {"active": True, "dtype": "str", "name": "cate_id", "type": "categorical"},
+            {"active": True, "dtype": "str", "embedding_dim": 64, "max_len": 100, "name": "clicked_items", "padding": "pre", "pretrained_emb": "/home/raoxuan/projects/open_unimixer_skills/data/MicroVideo1.7M_x1/item_image_emb_dim64.h5", "splitter": "^", "type": "sequence"},
+            {"active": True, "dtype": "str", "max_len": 100, "name": "clicked_categories", "padding": "pre", "share_embedding": "cate_id", "splitter": "^", "type": "sequence"},
+            {"active": False, "dtype": "str", "name": "timestamp", "type": "categorical"},
+        ],
+        "label_col": {"dtype": "float", "name": "is_click"},
+        "min_categr_count": 1,
+        "test_data": str(DATA_ROOT / "MicroVideo1.7M_x1" / "test.csv"),
+        "train_data": str(DATA_ROOT / "MicroVideo1.7M_x1" / "train.csv"),
+        "valid_data": str(DATA_ROOT / "MicroVideo1.7M_x1" / "test.csv"),
+        "embedding_dim": 40,
+        "batch_size": 4096,
+        "metrics": ["AUC", "logloss"],
+        "monitor": "AUC",
+    },
 }
 
-MODELS = ["HeteroAttention", "RankMixer", "HiFormer", "FAT", "TokenMixer_Large", "UniMixer_lite"]
+MODELS = ["HeteroAttention", "RankMixer", "HiFormer", "FAT", "TokenMixer_Large", "UniMixer_lite", "TransformerCTR"]
 
 COMMON_TRAIN = {
     "loss": "binary_crossentropy",
@@ -142,7 +163,13 @@ BASE_CONFIG = {
 }
 
 
-def get_model_params(model_name, embedding_dim):
+def get_model_params(model_name, embedding_dim, num_fields=1):
+    # RankMixer requires embedding_dim % num_fields == 0
+    if model_name == "RankMixer":
+        if embedding_dim % num_fields != 0:
+            embedding_dim = ((embedding_dim // num_fields) + 1) * num_fields
+            print(f"[INFO] Adjusted RankMixer embedding_dim to {embedding_dim} for {num_fields} fields")
+
     # FFN rules
     if model_name == "TokenMixer_Large":
         ffn_dim = int(1.5 * embedding_dim)
@@ -159,6 +186,7 @@ def get_model_params(model_name, embedding_dim):
         "output_mlp_hidden_units": output_mlp,
         "net_dropout": 0.1,
         "batch_norm": False,
+        "data_block_size": 1000000,
     }
 
     if model_name == "HeteroAttention":
@@ -179,6 +207,12 @@ def get_model_params(model_name, embedding_dim):
             "sinkhorn_iters": 20,
             "sinkhorn_temperature": 0.2,
         }
+    elif model_name == "TransformerCTR":
+        return {
+            **common,
+            "num_heads": 4,
+            "use_cls_token": True,
+        }
     else:
         raise ValueError(f"Unknown model: {model_name}")
 
@@ -191,6 +225,7 @@ def get_class_name(model_name):
         "FAT": "FAT",
         "TokenMixer_Large": "TokenMixerLarge",
         "UniMixer_lite": "UniMixerLite",
+        "TransformerCTR": "TransformerCTR",
     }
     return mapping[model_name]
 
@@ -237,9 +272,16 @@ def generate_configs():
                 dataset_config["feature_specs"] = ds_info["feature_specs"]
             dataset_configs[dataset_id] = dataset_config
 
+            # Compute num_fields for RankMixer compatibility
+            num_fields = sum(
+                1 if isinstance(col.get("name"), str) else len(col.get("name", []))
+                for col in ds_info["feature_cols"]
+                if col.get("active") != False and col.get("type") != "meta"
+            )
+
             # Model config
             exp_id = f"{get_class_name(model_name)}_{dataset_id}_unified"
-            model_param = get_model_params(model_name, embedding_dim)
+            model_param = get_model_params(model_name, embedding_dim, num_fields)
             train_cfg = {
                 **COMMON_TRAIN,
                 "dataset_id": dataset_id,

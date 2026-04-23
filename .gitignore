@@ -20,6 +20,12 @@ wheels/
 .installed.cfg
 *.egg
 
+results/
+hyperparam_search_results/
+KuaiVideo_x1/
+
+
+
 # Virtual Environment
 venv/
 env/

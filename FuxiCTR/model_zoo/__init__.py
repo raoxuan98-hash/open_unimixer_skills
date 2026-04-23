@@ -44,7 +44,7 @@ from .PEPNet.src import PPNet
 from .TransAct.src import TransAct
 from .multitask import ShareBottom, MMoE, PLE
 from .EulerNet.src import EulerNet
-from .WuKong.src import WuKong
+from .Wukong.src import WuKong
 from .GDCN.src import GDCN
 from .TransformerCTR.src import TransformerCTR
 from .HeteroAttention.src import HeteroAttention

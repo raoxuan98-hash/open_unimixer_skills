@@ -49,8 +49,6 @@ class ParquetDataset(Dataset):
 class ParquetDataLoader(DataLoader):
     def __init__(self, feature_map, data_path, batch_size=32, shuffle=False,
                  num_workers=1, **kwargs):
-        if not data_path.endswith(".parquet"):
-            data_path += ".parquet"
         self.dataset = ParquetDataset(feature_map, data_path)
         super().__init__(dataset=self.dataset, batch_size=batch_size,
                          shuffle=shuffle, num_workers=num_workers,

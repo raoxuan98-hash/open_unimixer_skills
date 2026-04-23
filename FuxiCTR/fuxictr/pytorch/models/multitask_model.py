@@ -69,7 +69,42 @@ class MultiTaskModel(BaseModel):
             )
 
     def compile(self, optimizer, loss, lr):
-        self.optimizer = get_optimizer(optimizer, self.parameters(), lr)
+        opt_name = optimizer.lower() if isinstance(optimizer, str) else str(optimizer)
+        if opt_name == "adamw":
+            self._use_adamw_regularization = True
+            # Identify embedding parameters via FeatureEmbeddingDict
+            emb_param_names = set()
+            for m_name, module in self.named_modules():
+                if type(module) == FeatureEmbeddingDict:
+                    for p_name, param in module.named_parameters():
+                        if param.requires_grad:
+                            emb_param_names.add(".".join([m_name, p_name]))
+            
+            emb_params = []
+            net_params = []
+            for name, param in self.named_parameters():
+                if param.requires_grad:
+                    if name in emb_param_names:
+                        emb_params.append(param)
+                    else:
+                        net_params.append(param)
+            
+            param_groups = []
+            if emb_params:
+                group = {"params": emb_params}
+                if self._embedding_regularizer:
+                    group["weight_decay"] = self._embedding_regularizer
+                param_groups.append(group)
+            if net_params:
+                group = {"params": net_params}
+                if self._net_regularizer:
+                    group["weight_decay"] = self._net_regularizer
+                param_groups.append(group)
+            
+            self.optimizer = get_optimizer("AdamW", param_groups, lr)
+        else:
+            self._use_adamw_regularization = False
+            self.optimizer = get_optimizer(optimizer, self.parameters(), lr)
         if isinstance(loss, list):
             self.loss_fn = [get_loss(l) for l in loss]
         else:
@@ -83,23 +118,27 @@ class MultiTaskModel(BaseModel):
         return y
 
     def regularization_loss(self):
-        reg_loss = 0
+        if getattr(self, '_use_adamw_regularization', False):
+            return 0
+        reg_term = 0
         if self._embedding_regularizer or self._net_regularizer:
             emb_reg = get_regularizer(self._embedding_regularizer)
             net_reg = get_regularizer(self._net_regularizer)
-            for _, module in self.named_modules():
-                for p_name, param in module.named_parameters():
-                    if param.requires_grad:
-                        if p_name in ["weight", "bias"]:
-                            if type(module) == nn.Embedding:
-                                if self._embedding_regularizer:
-                                    for emb_p, emb_lambda in emb_reg:
-                                        reg_loss += (emb_lambda / emb_p) * torch.norm(param, emb_p) ** emb_p
-                            else:
-                                if self._net_regularizer:
-                                    for net_p, net_lambda in net_reg:
-                                        reg_loss += (net_lambda / net_p) * torch.norm(param, net_p) ** net_p
-        return reg_loss
+            emb_params = set()
+            for m_name, module in self.named_modules():
+                if type(module) == FeatureEmbeddingDict:
+                    for p_name, param in module.named_parameters():
+                        if param.requires_grad:
+                            emb_params.add(".".join([m_name, p_name]))
+            for name, param in self.named_parameters():
+                if param.requires_grad:
+                    if name in emb_params:
+                        for emb_p, emb_lambda in emb_reg:
+                            reg_term += (emb_lambda / emb_p) * torch.norm(param, emb_p) ** emb_p
+                    else:
+                        for net_p, net_lambda in net_reg:
+                            reg_term += (net_lambda / net_p) * torch.norm(param, net_p) ** net_p
+        return reg_term
 
     def add_loss(self, return_dict, y_true):
         labels = self.feature_map.labels

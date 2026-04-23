@@ -48,31 +48,43 @@ def split_train_test(train_ddf=None, valid_ddf=None, test_ddf=None, valid_size=0
     return train_ddf, valid_ddf, test_ddf
 
 
-def transform_block(feature_encoder, df_block, filename):
-    df_block = feature_encoder.transform(df_block)
-    data_path = os.path.join(feature_encoder.data_dir, filename)
-    logging.info("Saving data to parquet: " + data_path)
-    os.makedirs(os.path.dirname(data_path), exist_ok=True)
-    df_block.to_parquet(data_path, index=False, engine="pyarrow")
+def transform_compute(feature_encoder, df_block):
+    """Phase 1: compute-intensive feature transform (runs in worker process)."""
+    return feature_encoder.transform(df_block)
 
 
 def transform(feature_encoder, ddf, filename, block_size=0):
     ddf = ddf.collect().to_pandas()
     if block_size > 0:
+        # Phase 1: parallel feature transform (compute-intensive)
         pool = mp.Pool(mp.cpu_count() // 2)
+        async_results = {}
         block_id = 0
         for idx in range(0, len(ddf), block_size):
             df_block = ddf.iloc[idx:(idx + block_size)]
-            pool.apply_async(
-                transform_block,
-                args=(feature_encoder, df_block,
-                      '{}/part_{:05d}.parquet'.format(filename, block_id))
+            async_results[block_id] = pool.apply_async(
+                transform_compute,
+                args=(feature_encoder, df_block)
             )
             block_id += 1
         pool.close()
+        
+        # Phase 2: sequential parquet write (I/O-bound, avoid disk contention)
+        data_dir = os.path.join(feature_encoder.data_dir, filename)
+        os.makedirs(data_dir, exist_ok=True)
+        for block_id in sorted(async_results.keys()):
+            df_transformed = async_results[block_id].get()
+            data_path = os.path.join(data_dir, 'part_{:05d}.parquet'.format(block_id))
+            logging.info("Saving data to parquet: " + data_path)
+            df_transformed.to_parquet(data_path, index=False, engine="pyarrow")
+        
         pool.join()
     else:
-        transform_block(feature_encoder, ddf, filename + ".parquet")
+        df_transformed = feature_encoder.transform(ddf)
+        data_path = os.path.join(feature_encoder.data_dir, filename + ".parquet")
+        logging.info("Saving data to parquet: " + data_path)
+        os.makedirs(os.path.dirname(data_path), exist_ok=True)
+        df_transformed.to_parquet(data_path, index=False, engine="pyarrow")
 
 
 def build_dataset(feature_encoder, train_data=None, valid_data=None, test_data=None,

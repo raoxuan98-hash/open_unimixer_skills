@@ -42,6 +42,8 @@ class BaseModel(nn.Module):
                  embedding_regularizer=None, 
                  net_regularizer=None, 
                  reduce_lr_on_plateau=True, 
+                 reduce_lr_patience=1,
+                 reduce_lr_factor=0.5,
                  **kwargs):
         super(BaseModel, self).__init__()
         self.device = get_device(gpu)
@@ -53,6 +55,8 @@ class BaseModel(nn.Module):
         self._embedding_regularizer = embedding_regularizer
         self._net_regularizer = net_regularizer
         self._reduce_lr_on_plateau = reduce_lr_on_plateau
+        self._reduce_lr_patience = reduce_lr_patience
+        self._reduce_lr_factor = reduce_lr_factor
         self._verbose = kwargs["verbose"]
         self.feature_map = feature_map
         self.output_activation = self.get_output_activation(task)
@@ -62,10 +66,47 @@ class BaseModel(nn.Module):
         self.validation_metrics = kwargs["metrics"]
 
     def compile(self, optimizer, loss, lr):
-        self.optimizer = get_optimizer(optimizer, self.parameters(), lr)
+        opt_name = optimizer.lower() if isinstance(optimizer, str) else str(optimizer)
+        if opt_name == "adamw":
+            self._use_adamw_regularization = True
+            # Identify embedding parameters via FeatureEmbeddingDict
+            emb_param_names = set()
+            for m_name, module in self.named_modules():
+                if type(module) == FeatureEmbeddingDict:
+                    for p_name, param in module.named_parameters():
+                        if param.requires_grad:
+                            emb_param_names.add(".".join([m_name, p_name]))
+            
+            emb_params = []
+            net_params = []
+            for name, param in self.named_parameters():
+                if param.requires_grad:
+                    if name in emb_param_names:
+                        emb_params.append(param)
+                    else:
+                        net_params.append(param)
+            
+            param_groups = []
+            if emb_params:
+                group = {"params": emb_params}
+                if self._embedding_regularizer:
+                    group["weight_decay"] = self._embedding_regularizer
+                param_groups.append(group)
+            if net_params:
+                group = {"params": net_params}
+                if self._net_regularizer:
+                    group["weight_decay"] = self._net_regularizer
+                param_groups.append(group)
+            
+            self.optimizer = get_optimizer("AdamW", param_groups, lr)
+        else:
+            self._use_adamw_regularization = False
+            self.optimizer = get_optimizer(optimizer, self.parameters(), lr)
         self.loss_fn = get_loss(loss)
 
     def regularization_loss(self):
+        if getattr(self, '_use_adamw_regularization', False):
+            return 0
         reg_term = 0
         if self._embedding_regularizer or self._net_regularizer:
             emb_reg = get_regularizer(self._embedding_regularizer)
@@ -76,11 +117,12 @@ class BaseModel(nn.Module):
                     for p_name, param in module.named_parameters():
                         if param.requires_grad:
                             emb_params.add(".".join([m_name, p_name]))
-                            for emb_p, emb_lambda in emb_reg:
-                                reg_term += (emb_lambda / emb_p) * torch.norm(param, emb_p) ** emb_p
             for name, param in self.named_parameters():
                 if param.requires_grad:
-                    if name not in emb_params:
+                    if name in emb_params:
+                        for emb_p, emb_lambda in emb_reg:
+                            reg_term += (emb_lambda / emb_p) * torch.norm(param, emb_p) ** emb_p
+                    else:
                         for net_p, net_lambda in net_reg:
                             reg_term += (net_lambda / net_p) * torch.norm(param, net_p) ** net_p
         return reg_term
@@ -147,6 +189,8 @@ class BaseModel(nn.Module):
         self._stopping_steps = 0
         self._steps_per_epoch = len(data_generator)
         self._stop_training = False
+        self._reduce_lr_patience = kwargs.get("reduce_lr_patience", self._reduce_lr_patience)
+        self._reduce_lr_factor = kwargs.get("reduce_lr_factor", self._reduce_lr_factor)
         self._total_steps = 0
         self._batch_index = 0
         self._epoch_index = 0
@@ -158,6 +202,10 @@ class BaseModel(nn.Module):
         for epoch in range(epochs):
             self._epoch_index = epoch
             self.train_epoch(data_generator)
+            if hasattr(self, 'scheduler') and self.scheduler is not None:
+                self.scheduler.step()
+                current_lr = self.optimizer.param_groups[0]['lr']
+                logging.info("Scheduler step: lr={:.6f}".format(current_lr))
             if self._stop_training:
                 break
             else:
@@ -172,8 +220,8 @@ class BaseModel(nn.Module):
            (self._monitor_mode == "max" and monitor_value < self._best_metric + min_delta):
             self._stopping_steps += 1
             logging.info("Monitor({})={:.6f} STOP!".format(self._monitor_mode, monitor_value))
-            if self._reduce_lr_on_plateau:
-                current_lr = self.lr_decay()
+            if self._reduce_lr_on_plateau and self._stopping_steps >= self._reduce_lr_patience:
+                current_lr = self.lr_decay(factor=self._reduce_lr_factor)
                 logging.info("Reduce learning rate on plateau: {:.6f}".format(current_lr))
         else:
             self._stopping_steps = 0
@@ -182,7 +230,7 @@ class BaseModel(nn.Module):
                 logging.info("Save best model: monitor({})={:.6f}"\
                              .format(self._monitor_mode, monitor_value))
                 self.save_weights(self.checkpoint)
-        if self._stopping_steps >= self._early_stop_patience:
+        if self._early_stop_patience is not None and self._stopping_steps >= self._early_stop_patience:
             self._stop_training = True
             logging.info("********* Epoch={} early stop *********".format(self._epoch_index + 1))
         if not self._save_best_only:
@@ -207,6 +255,8 @@ class BaseModel(nn.Module):
     def train_epoch(self, data_generator):
         self._batch_index = 0
         train_loss = 0
+        ema_train_loss = 0
+        ema_decay = 0.96
         self.train()
         if self._verbose == 0:
             batch_iterator = data_generator
@@ -216,7 +266,16 @@ class BaseModel(nn.Module):
             self._batch_index = batch_index
             self._total_steps += 1
             loss = self.train_step(batch_data)
-            train_loss += loss.item()
+            loss_item = loss.item()
+            train_loss += loss_item
+            # 指数滑动平均初始化
+            if batch_index == 0:
+                ema_train_loss = loss_item
+            else:
+                ema_train_loss = ema_decay * ema_train_loss + (1 - ema_decay) * loss_item
+            # 每隔50步打印一次 EMA train_log_loss
+            if self._total_steps % 50 == 0:
+                logging.info("train_log_loss: {:.6f}".format(ema_train_loss))
             if self._total_steps % self._eval_steps == 0:
                 logging.info("Train loss: {:.6f}".format(train_loss / self._eval_steps))
                 train_loss = 0

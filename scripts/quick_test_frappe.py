@@ -3,13 +3,12 @@
 """
 Quick test script for custom models on Frappe_x1 dataset.
 Usage:
-  python quick_test_frappe.py --model HeteroAttention
-  python quick_test_frappe.py --model all
+  python scripts/quick_test_frappe.py --model HeteroAttention
+  python scripts/quick_test_frappe.py --model all
 """
 
 import os
 import sys
-import shutil
 import subprocess
 import argparse
 from pathlib import Path
@@ -182,7 +181,7 @@ def setup_model(model_name, model_info):
     config_dir = model_dir / "config"
     config_dir.mkdir(exist_ok=True)
 
-    # Write dataset_config.yaml
+    # Write dataset_config.yaml (used by --dataset_config override)
     write_yaml(config_dir / "dataset_config.yaml", DATASET_CONFIG)
 
     # Write model_config.yaml
@@ -197,18 +196,6 @@ def setup_model(model_name, model_info):
     }
     write_yaml(config_dir / "model_config.yaml", model_config)
 
-    # Copy run_expid.py and fuxictr_version.py if missing
-    run_script = model_dir / "run_expid.py"
-    if not run_script.exists():
-        src_script = FUXICTR_ROOT / "model_zoo" / "DCNv2" / "run_expid.py"
-        shutil.copy(src_script, run_script)
-        print(f"[INFO] Copied run_expid.py to {model_name}")
-    version_file = model_dir / "fuxictr_version.py"
-    if not version_file.exists():
-        src_version = FUXICTR_ROOT / "model_zoo" / "DCNv2" / "fuxictr_version.py"
-        shutil.copy(src_version, version_file)
-        print(f"[INFO] Copied fuxictr_version.py to {model_name}")
-
     return exp_id
 
 
@@ -216,15 +203,16 @@ def run_model(model_name, exp_id, gpu=-1):
     model_dir = FUXICTR_ROOT / "model_zoo" / model_name
     cmd = [
         sys.executable,
-        str(model_dir / "run_expid.py"),
-        "--config", str(model_dir / "config"),
+        str(PROJECT_ROOT / "main" / "run_expid.py"),
+        "--model", model_name,
         "--expid", exp_id,
+        "--dataset_config", str(model_dir / "config"),
         "--gpu", str(gpu),
     ]
     print(f"\n{'='*60}")
     print(f"Running {model_name} | expid={exp_id}")
     print(f"{'='*60}")
-    result = subprocess.run(cmd, cwd=str(model_dir))
+    result = subprocess.run(cmd, cwd=str(PROJECT_ROOT))
     return result.returncode
 
 

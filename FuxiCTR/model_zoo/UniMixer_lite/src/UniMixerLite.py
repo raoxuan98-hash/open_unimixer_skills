@@ -18,7 +18,8 @@
 A UniMixer-Lite based CTR prediction model for FuxiCTR.
 
 Architecture:
-    FeatureEmbedding
+    FeatureEmbedding (dim=embedding_dim)
+        -> Embedding Projection (embedding_dim -> ffn_in_dim)
         -> [Optional Positional Embedding]
         -> Siamese dual-branch (x and y)
         -> UniMixer-Lite Encoder Layers (Kronecker doubly-stochastic mixing + Token-specific SwishGLU + LayerNorm)
@@ -141,11 +142,13 @@ class KroneckerMixer(nn.Module):
         B = x.shape[0]
         N, K = self.N, self.K
 
-        A = log_sinkhorn(self.A_logits.unsqueeze(0), n_iters=self.sinkhorn_iters, temperature=self.sinkhorn_temperature).squeeze(0)
-
+        A_logits_normalized = F.normalize(self.A_logits, p=2, dim=-1)
+        # A = log_sinkhorn(A_logits_normalized.unsqueeze(0), n_iters=self.sinkhorn_iters, temperature=self.sinkhorn_temperature).squeeze(0)
+        A = A_logits_normalized
         W_logits = torch.einsum('tk,kde->tde', self.W_1, self.W_V)
-        W = log_sinkhorn(W_logits.unsqueeze(0), n_iters=self.sinkhorn_iters, temperature=self.sinkhorn_temperature).squeeze(0)
-
+        W_logits_normalized = F.normalize(W_logits, p=2, dim=1)
+        # W = log_sinkhorn(W_logits_normalized.unsqueeze(0), n_iters=self.sinkhorn_iters, temperature=self.sinkhorn_temperature).squeeze(0)
+        W = W_logits_normalized
         x_reshaped = x.view(B, N, K)
         x_local = torch.einsum('bni,nio->bno', x_reshaped, W)
         x_global = torch.einsum('mn,bno->bmo', A, x_local)
@@ -215,36 +218,41 @@ class UniMixerLite(BaseModel):
                  gpu=-1,
                  learning_rate=1e-3,
                  embedding_dim=64,
-                 num_transformer_layers=2,
-                 block_size=4,
+                 ffn_in_dim=None,
+                 num_transformer_layers=3,
+                 block_size=3,
                  basis_num=8,
                  sinkhorn_iters=20,
                  sinkhorn_temperature=0.2,
                  transformer_dropout=0.1,
-                 ffn_dim=128,
+                 ffn_out_dim=128,
                  use_pos_embedding=True,
                  output_mlp_hidden_units=[128, 64],
                  net_dropout=0.0,
                  batch_norm=False,
                  embedding_regularizer=None,
                  net_regularizer=None,
+                 double_tokens=False,
                  **kwargs):
         """
         Args:
             feature_map: FeatureMap object from FuxiCTR.
-            embedding_dim: Dimension of feature embeddings.
+            embedding_dim: Dimension of feature embeddings (now fixed internally to 10).
+            ffn_in_dim: Dimension projected to before feeding into encoder layers.
             num_transformer_layers: Number of UniMixer-Lite encoder layers.
-            block_size: Chunk size for Kronecker mixing. Defaults to 4.
+            block_size: Chunk size for Kronecker mixing. Defaults to 3.
             basis_num: Number of basis matrices for local interaction W.
             sinkhorn_iters: Number of Sinkhorn iterations.
             sinkhorn_temperature: Temperature for Sinkhorn normalization. Defaults to 0.2.
             transformer_dropout: Dropout rate inside encoder layers and output MLP.
-            ffn_dim: Hidden dimension of the token-specific SwishGLU.
+            ffn_out_dim: Hidden dimension of the token-specific SwishGLU.
             use_pos_embedding: If True, add learnable positional embeddings.
             output_mlp_hidden_units: Hidden units of the final output MLP.
             net_dropout: Dropout rate of the output MLP.
             batch_norm: Whether to use batch normalization in the output MLP.
         """
+        if "ffn_dim" in kwargs:
+            ffn_out_dim = kwargs.pop("ffn_dim")
         super(UniMixerLite, self).__init__(
             feature_map,
             model_id=model_id,
@@ -253,31 +261,46 @@ class UniMixerLite(BaseModel):
             net_regularizer=net_regularizer,
             **kwargs)
 
-        self.embedding_layer = FeatureEmbedding(feature_map, embedding_dim)
+        self.double_tokens = double_tokens
+        self.emb_dim = embedding_dim
+        if self.double_tokens:
+            assert self.emb_dim % 2 == 0, f"emb_dim ({self.emb_dim}) must be even for token splitting"
+        self.embedding_layer = FeatureEmbedding(feature_map, self.emb_dim)
         self.use_pos_embedding = use_pos_embedding
 
-        self.num_fields = feature_map.num_fields
-        self.seq_len = self.num_fields
+        # Embedding projection: embedding_dim -> ffn_in_dim
+        if ffn_in_dim is not None and ffn_in_dim != self.emb_dim:
+            self.embedding_proj = nn.Linear(self.emb_dim, ffn_in_dim)
+            proj_dim = ffn_in_dim
+        else:
+            self.embedding_proj = None
+            proj_dim = self.emb_dim
 
-        assert (self.seq_len * embedding_dim) % block_size == 0, \
-            f"seq_len * embedding_dim ({self.seq_len * embedding_dim}) must be divisible by block_size ({block_size})"
+        self.num_fields = feature_map.num_fields
+        self.seq_len = self.num_fields * (2 if self.double_tokens else 1)
+        if self.double_tokens:
+            assert proj_dim % 2 == 0, f"proj_dim ({proj_dim}) must be even for token splitting"
+        self.d_model = proj_dim // 2 if self.double_tokens else proj_dim
+
+        assert (self.seq_len * self.d_model) % block_size == 0, \
+            f"seq_len * d_model ({self.seq_len * self.d_model}) must be divisible by block_size ({block_size})"
         self.block_size = block_size
 
         # Siamese y-branch projection
-        self.y_proj = nn.Linear(embedding_dim, embedding_dim, bias=False)
+        self.y_proj = nn.Linear(self.d_model, self.d_model, bias=False)
 
         # Positional Embedding
         if self.use_pos_embedding:
-            self.pos_embedding = nn.Parameter(torch.zeros(1, self.seq_len, embedding_dim))
+            self.pos_embedding = nn.Parameter(torch.zeros(1, self.seq_len, self.d_model))
 
         # UniMixer-Lite Encoder Layers
         self.transformer_encoder = nn.ModuleList([
             UniMixerLiteLayer(
                 seq_len=self.seq_len,
-                d_model=embedding_dim,
+                d_model=self.d_model,
                 block_size=block_size,
                 basis_num=basis_num,
-                d_ff=ffn_dim,
+                d_ff=ffn_out_dim,
                 sinkhorn_iters=sinkhorn_iters,
                 sinkhorn_temperature=sinkhorn_temperature,
                 dropout=transformer_dropout
@@ -285,33 +308,17 @@ class UniMixerLite(BaseModel):
             for _ in range(num_transformer_layers)
         ])
 
-        # Output MLP (SwishGLU-based)
-        mlp_input_dim = embedding_dim
-
-        if not isinstance(net_dropout, list):
-            dropout_rates = [net_dropout] * len(output_mlp_hidden_units)
-        else:
-            dropout_rates = net_dropout
-
-        output_layers = []
-        prev_dim = mlp_input_dim
-        for idx, h in enumerate(output_mlp_hidden_units):
-            output_layers.append(SwishGLU(
-                input_dim=prev_dim,
-                hidden_dim=h,
-                output_dim=h,
-                dropout=dropout_rates[idx]
-            ))
-            if batch_norm:
-                output_layers.append(nn.BatchNorm1d(h))
-            prev_dim = h
-        output_layers.append(nn.Linear(prev_dim, 1))
-        self.output_mlp = nn.Sequential(*output_layers)
+        self.output_mlp = nn.Linear(self.d_model, 1)
 
         # FuxiCTR lifecycle methods
         self.compile(kwargs["optimizer"], kwargs["loss"], learning_rate)
         self.reset_parameters()
         self.model_to_device()
+
+    def set_sinkhorn_temperature(self, temperature):
+        """Update the sinkhorn temperature in all KroneckerMixer modules."""
+        for layer in self.transformer_encoder:
+            layer.mixer.sinkhorn_temperature = temperature
 
     def forward(self, inputs):
         """
@@ -326,9 +333,14 @@ class UniMixerLite(BaseModel):
         X = self.get_inputs(inputs)
 
         # 1. Feature Embedding
-        feature_emb = self.embedding_layer(X)  # [B, L, D]
+        feature_emb = self.embedding_layer(X)  # [B, L, emb_dim]
+        if self.embedding_proj is not None:
+            feature_emb = self.embedding_proj(feature_emb)  # [B, L, proj_dim]
+        if self.double_tokens:
+            B = feature_emb.size(0)
+            feature_emb = feature_emb.view(B, -1, self.d_model)  # [B, 2L, d_model]
         x = feature_emb
-        y = self.y_proj(feature_emb)
+        y = feature_emb
 
         # 2. Optional positional embeddings
         if self.use_pos_embedding:
@@ -340,7 +352,7 @@ class UniMixerLite(BaseModel):
             x, y = layer(x, y)
 
         # 4. Aggregation: use main branch x, mean pooling over tokens
-        output = x.mean(dim=1)  # (batch, emb_dim)
+        output = x.mean(dim=1)  # (batch, ffn_in_dim)
 
         # 5. Final prediction
         y_pred = self.output_mlp(output)

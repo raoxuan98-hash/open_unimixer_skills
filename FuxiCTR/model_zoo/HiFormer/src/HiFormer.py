@@ -18,7 +18,8 @@
 A HiFormer-based CTR prediction model for FuxiCTR.
 
 Architecture:
-    FeatureEmbedding
+    FeatureEmbedding (dim=embedding_dim)
+        -> Embedding Projection (embedding_dim -> ffn_in_dim)
         -> [Optional Positional Embedding]
         -> HiFormer Encoder Layers (Low-rank Multi-head Attention + SwishGLU FFN + Residual)
         -> Mean pooling over tokens
@@ -226,32 +227,37 @@ class HiFormer(BaseModel):
                  gpu=-1,
                  learning_rate=1e-3,
                  embedding_dim=64,
-                 num_transformer_layers=2,
+                 ffn_in_dim=None,
+                 num_transformer_layers=3,
                  num_heads=4,
                  low_rank_dim=64,
                  transformer_dropout=0.1,
-                 ffn_dim=128,
+                 ffn_out_dim=128,
                  use_pos_embedding=True,
                  output_mlp_hidden_units=[128, 64],
                  net_dropout=0.0,
                  batch_norm=False,
                  embedding_regularizer=None,
                  net_regularizer=None,
+                 double_tokens=False,
                  **kwargs):
         """
         Args:
             feature_map: FeatureMap object from FuxiCTR.
-            embedding_dim: Dimension of feature embeddings.
+            embedding_dim: Dimension of feature embeddings (now fixed internally to 10).
+            ffn_in_dim: Dimension projected to before feeding into encoder layers.
             num_transformer_layers: Number of HiFormer encoder layers.
             num_heads: Number of attention heads.
             low_rank_dim: Rank dimension for low-rank Q/K/V projections.
             transformer_dropout: Dropout rate inside encoder layers and output MLP.
-            ffn_dim: Hidden dimension of the SwishGLU in encoder layers.
+            ffn_out_dim: Hidden dimension of the SwishGLU in encoder layers.
             use_pos_embedding: If True, add learnable positional embeddings.
             output_mlp_hidden_units: Hidden units of the final output MLP.
             net_dropout: Dropout rate of the output MLP.
             batch_norm: Whether to use batch normalization in the output MLP.
         """
+        if "ffn_dim" in kwargs:
+            ffn_out_dim = kwargs.pop("ffn_dim")
         super(HiFormer, self).__init__(
             feature_map,
             model_id=model_id,
@@ -260,51 +266,45 @@ class HiFormer(BaseModel):
             net_regularizer=net_regularizer,
             **kwargs)
 
-        self.embedding_layer = FeatureEmbedding(feature_map, embedding_dim)
+        self.double_tokens = double_tokens
+        self.emb_dim = embedding_dim
+        if self.double_tokens:
+            assert self.emb_dim % 2 == 0, f"emb_dim ({self.emb_dim}) must be even for token splitting"
+        self.embedding_layer = FeatureEmbedding(feature_map, self.emb_dim)
         self.use_pos_embedding = use_pos_embedding
 
-        self.num_fields = feature_map.num_fields
-        self.seq_len = self.num_fields
+        # Embedding projection: embedding_dim -> ffn_in_dim
+        if ffn_in_dim is not None and ffn_in_dim != self.emb_dim:
+            self.embedding_proj = nn.Linear(self.emb_dim, ffn_in_dim)
+            proj_dim = ffn_in_dim
+        else:
+            self.embedding_proj = None
+            proj_dim = self.emb_dim
 
-        # Positional Embedding: learnable parameter of shape [1, seq_len, embedding_dim]
+        self.num_fields = feature_map.num_fields
+        self.seq_len = self.num_fields * (2 if self.double_tokens else 1)
+        if self.double_tokens:
+            assert proj_dim % 2 == 0, f"proj_dim ({proj_dim}) must be even for token splitting"
+        self.d_model = proj_dim // 2 if self.double_tokens else proj_dim
+
+        # Positional Embedding: learnable parameter of shape [1, seq_len, ffn_in_dim]
         if self.use_pos_embedding:
-            self.pos_embedding = nn.Parameter(torch.zeros(1, self.seq_len, embedding_dim))
+            self.pos_embedding = nn.Parameter(torch.zeros(1, self.seq_len, self.d_model))
 
         # HiFormer Encoder Layers
         self.transformer_encoder = nn.ModuleList([
             HiFormerEncoderLayer(
                 seq_len=self.seq_len,
-                d_model=embedding_dim,
+                d_model=self.d_model,
                 num_heads=num_heads,
                 low_rank_dim=low_rank_dim,
-                dim_feedforward=ffn_dim,
+                dim_feedforward=ffn_out_dim,
                 dropout=transformer_dropout
             )
             for _ in range(num_transformer_layers)
         ])
 
-        # Output MLP (SwishGLU-based)
-        mlp_input_dim = embedding_dim
-
-        if not isinstance(net_dropout, list):
-            dropout_rates = [net_dropout] * len(output_mlp_hidden_units)
-        else:
-            dropout_rates = net_dropout
-
-        output_layers = []
-        prev_dim = mlp_input_dim
-        for idx, h in enumerate(output_mlp_hidden_units):
-            output_layers.append(SwishGLU(
-                input_dim=prev_dim,
-                hidden_dim=h,
-                output_dim=h,
-                dropout=dropout_rates[idx]
-            ))
-            if batch_norm:
-                output_layers.append(nn.BatchNorm1d(h))
-            prev_dim = h
-        output_layers.append(nn.Linear(prev_dim, 1))
-        self.output_mlp = nn.Sequential(*output_layers)
+        self.output_mlp = nn.Linear(self.d_model, 1)
 
         # FuxiCTR lifecycle methods
         self.compile(kwargs["optimizer"], kwargs["loss"], learning_rate)
@@ -323,8 +323,13 @@ class HiFormer(BaseModel):
         """
         X = self.get_inputs(inputs)
 
-        # 1. Feature Embedding: (batch_size, num_fields, embedding_dim)
-        feature_emb = self.embedding_layer(X)  # [B, L, D]
+        # 1. Feature Embedding: (batch_size, num_fields, 10)
+        feature_emb = self.embedding_layer(X)  # [B, L, emb_dim]
+        if self.embedding_proj is not None:
+            feature_emb = self.embedding_proj(feature_emb)  # [B, L, proj_dim]
+        if self.double_tokens:
+            B = feature_emb.size(0)
+            feature_emb = feature_emb.view(B, -1, self.d_model)  # [B, 2L, d_model]
         x = feature_emb
 
         # 2. Optional: add positional embeddings
@@ -333,10 +338,10 @@ class HiFormer(BaseModel):
 
         # 3. HiFormer Encoder
         for layer in self.transformer_encoder:
-            x = layer(x)  # (batch, seq_len, emb_dim)
+            x = layer(x)  # (batch, seq_len, ffn_in_dim)
 
         # 4. Aggregation: mean pooling over tokens
-        output = x.mean(dim=1)  # (batch, emb_dim)
+        output = x.mean(dim=1)  # (batch, ffn_in_dim)
 
         # 5. Final prediction
         y_pred = self.output_mlp(output)

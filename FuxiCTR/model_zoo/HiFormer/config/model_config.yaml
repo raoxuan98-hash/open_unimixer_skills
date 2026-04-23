@@ -16,77 +16,77 @@ HiFormer_movielenslatest_x1_unified:
   task: binary_classification
   optimizer: adam
   learning_rate: 0.001
-  embedding_regularizer: 0
-  net_regularizer: 0
+  embedding_regularizer: 0.005
+  net_regularizer: 5.0e-05
   epochs: 100
   shuffle: true
   seed: 2024
   monitor_mode: max
   early_stop_patience: 2
   dataset_id: movielenslatest_x1
-  batch_size: 4096
+  batch_size: 2048
   metrics:
   - AUC
   - logloss
   monitor: AUC
   model: HiFormer
-  embedding_dim: 40
+  embedding_dim: 128
   num_transformer_layers: 2
-  transformer_dropout: 0.1
-  ffn_dim: 80
-  use_pos_embedding: true
-  output_mlp_hidden_units:
-  - 80
-  - 40
-  net_dropout: 0.1
+  transformer_dropout: 0.0
+  use_pos_embedding: false
+  net_dropout: 0.2
   batch_norm: false
+  data_block_size: 1000000
   num_heads: 4
   low_rank_dim: 8
+  ffn_in_dim: null
+  ffn_out_dim: 128
+  use_cosine_lr: false
 HiFormer_frappe_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
   optimizer: adam
   learning_rate: 0.001
-  embedding_regularizer: 0
-  net_regularizer: 0
+  embedding_regularizer: 0.005
+  net_regularizer: 5.0e-05
   epochs: 100
   shuffle: true
   seed: 2024
   monitor_mode: max
   early_stop_patience: 2
   dataset_id: frappe_x1
-  batch_size: 4096
+  batch_size: 2048
   metrics:
   - AUC
   - logloss
   monitor: AUC
   model: HiFormer
-  embedding_dim: 56
+  embedding_dim: 128
   num_transformer_layers: 2
-  transformer_dropout: 0.1
-  ffn_dim: 112
-  use_pos_embedding: true
-  output_mlp_hidden_units:
-  - 112
-  - 56
-  net_dropout: 0.1
+  transformer_dropout: 0.0
+  use_pos_embedding: false
+  net_dropout: 0.2
   batch_norm: false
+  data_block_size: 1000000
   num_heads: 4
   low_rank_dim: 8
+  ffn_in_dim: null
+  ffn_out_dim: 128
+  use_cosine_lr: false
 HiFormer_kuaivideo_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
   optimizer: adam
   learning_rate: 0.001
-  embedding_regularizer: 0
-  net_regularizer: 0
+  embedding_regularizer: 0.005
+  net_regularizer: 5.0e-05
   epochs: 100
   shuffle: true
   seed: 2024
   monitor_mode: max
   early_stop_patience: 2
   dataset_id: kuaivideo_x1
-  batch_size: 8192
+  batch_size: 2048
   metrics:
   - gAUC
   - AUC
@@ -96,32 +96,32 @@ HiFormer_kuaivideo_x1_unified:
     gAUC: 1
   model: HiFormer
   group_id: group_id
-  embedding_dim: 40
+  embedding_dim: 128
   num_transformer_layers: 2
-  transformer_dropout: 0.1
-  ffn_dim: 80
-  use_pos_embedding: true
-  output_mlp_hidden_units:
-  - 80
-  - 40
-  net_dropout: 0.1
+  transformer_dropout: 0.0
+  use_pos_embedding: false
+  net_dropout: 0.2
   batch_norm: false
+  data_block_size: 1000000
   num_heads: 4
   low_rank_dim: 8
+  ffn_in_dim: null
+  ffn_out_dim: 512
+  use_cosine_lr: false
 HiFormer_taobaoad_x1_unified:
   loss: binary_crossentropy
   task: binary_classification
   optimizer: adam
   learning_rate: 0.001
-  embedding_regularizer: 0
-  net_regularizer: 0
+  embedding_regularizer: 0.001
+  net_regularizer: 1.0e-05
   epochs: 100
   shuffle: true
   seed: 2024
   monitor_mode: max
   early_stop_patience: 2
   dataset_id: taobaoad_x1
-  batch_size: 8192
+  batch_size: 2048
   metrics:
   - gAUC
   - AUC
@@ -131,15 +131,46 @@ HiFormer_taobaoad_x1_unified:
     gAUC: 1
   model: HiFormer
   group_id: group_id
-  embedding_dim: 48
+  embedding_dim: 128
   num_transformer_layers: 2
-  transformer_dropout: 0.1
-  ffn_dim: 96
-  use_pos_embedding: true
-  output_mlp_hidden_units:
-  - 96
-  - 48
+  transformer_dropout: 0.0
+  use_pos_embedding: false
   net_dropout: 0.1
   batch_norm: false
+  data_block_size: 1000000
   num_heads: 4
   low_rank_dim: 8
+  ffn_in_dim: null
+  ffn_out_dim: 768
+  use_cosine_lr: false
+HiFormer_microvideo1.7m_x1_unified:
+  loss: binary_crossentropy
+  task: binary_classification
+  optimizer: adam
+  learning_rate: 0.001
+  embedding_regularizer: 0.001
+  net_regularizer: 1.0e-05
+  epochs: 100
+  shuffle: true
+  seed: 2024
+  monitor_mode: max
+  early_stop_patience: 2
+  dataset_id: microvideo1.7m_x1
+  batch_size: 2048
+  metrics:
+  - AUC
+  - logloss
+  monitor: AUC
+  model: HiFormer
+  embedding_dim: 128
+  num_transformer_layers: 2
+  transformer_dropout: 0.0
+  use_pos_embedding: false
+  net_dropout: 0.1
+  batch_norm: false
+  data_block_size: 1000000
+  num_heads: 4
+  low_rank_dim: 8
+  ffn_in_dim: 128
+  ffn_out_dim: 768
+  use_cosine_lr: false

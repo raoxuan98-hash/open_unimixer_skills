@@ -1,0 +1,1 @@
+ 20260419-200653,[command] python run_dcnv2_v2.py --config ./DCNv2_movielenslatest_x1_tuner_config_01/ --expid DCNv2_movielenslatest_x1_016_98ea1c72 --gpu 0,[exp_id] DCNv2_movielenslatest_x1_016_98ea1c72,[dataset_id] movielenslatest_x1,[train] N.A.,[val] AUC: 0.968629 - logloss: 0.214666,[test] AUC: 0.968697 - logloss: 0.214542
