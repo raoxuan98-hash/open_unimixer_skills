@@ -52,3 +52,5 @@ checkpoints/
 
 # Data (optional - if you don't want to track data files)
 data/
+
+download_datasets/
