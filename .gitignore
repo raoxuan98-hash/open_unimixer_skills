@@ -24,7 +24,7 @@ results/
 hyperparam_search_results/
 KuaiVideo_x1/
 
-
+.history/
 
 # Virtual Environment
 venv/
