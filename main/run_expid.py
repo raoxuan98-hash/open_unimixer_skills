@@ -55,9 +55,15 @@ MODEL_CLASS_MAP = {
     "TransformerCTR": "TransformerCTR",
     "HeteroAttention": "HeteroAttention",
     "RankMixer": "RankMixer",
+    "RankMixer_Norm": "RankMixer",
     "TokenMixer_Large": "TokenMixerLarge",
+    "UniMixer_norm": "UniMixerNorm",
+    "UniMixer_norm_linear": "UniMixerNorm",
+    "UniMixer_layernorm": "UniMixerLayerNorm",
     "UniMixer_lite": "UniMixerLite",
     "UniMixer_lite_sinkhorn": "UniMixerLite",
+    "UniMixer_norm_lite_fusion": "UniMixerLite",
+    "UniMixer_norm_lite_fusion_xonly": "UniMixerLite",
     "HybridMixer": "HybridMixer",
 }
 
@@ -71,8 +77,8 @@ UNIFIED_ALIGNMENT = {
         "ffn_in_dim": None,
         "ffn_out_dim": 256,
         "net_dropout": 0.1,
-        "embedding_regularizer": 0.01,
-        "net_regularizer": 5.0e-05,
+        "embedding_regularizer": 0.001,
+        "net_regularizer": 0.0,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
     },
@@ -85,7 +91,7 @@ UNIFIED_ALIGNMENT = {
         "ffn_out_dim": 256,
         "net_dropout": 0.1,
         "embedding_regularizer": 0.001,
-        "net_regularizer": 5.0e-05,
+        "net_regularizer": 0.0,
         # "net_regularizer": 1e-3,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
@@ -93,21 +99,21 @@ UNIFIED_ALIGNMENT = {
 
     "kuaivideo_x1": {
         "epochs": 3,
-        "batch_size": 4096,
+        "batch_size": 8192,
         "embedding_dim": 64,
         "ffn_in_dim": 140,
         "ffn_out_dim": 256,
         "net_dropout": 0.1,
         "embedding_regularizer": 0.001,
-        "net_regularizer": 3e-5,
+        "net_regularizer": 0.0,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
     },
 
     "taobaoad_x1": {
         "epochs": 2,
-        "batch_size": 1024,
-        "embedding_dim": 240,
+        "batch_size": 8192,
+        "embedding_dim": 140,
         "ffn_in_dim": None,
         "ffn_out_dim": 512,
         "net_dropout": 0.1,
@@ -125,7 +131,7 @@ UNIFIED_ALIGNMENT = {
         "ffn_out_dim": 256,
         "net_dropout": 0.1,
         "embedding_regularizer": 0.001,
-        "net_regularizer": 3e-05,
+        "net_regularizer": 0.0,
         "use_pos_embedding": False,
         "use_cosine_lr": False,
     },
@@ -153,7 +159,7 @@ def import_model_src(model_name):
 
 def adjust_sinkhorn_temperature(model, model_name, dataset_id, epoch, epochs, batch_index=None, steps_per_epoch=None):
     """Adjust sinkhorn temperature for supported models based on dataset and epoch."""
-    if model_name not in ("UniMixer_lite", "UniMixer_lite_sinkhorn", "HybridMixer"):
+    if model_name not in ("UniMixer_lite", "UniMixer_lite_sinkhorn", "UniMixer_norm_lite_fusion", "UniMixer_norm_lite_fusion_xonly", "HybridMixer"):
         return
     
     threshold_epoch = 4 if dataset_id in ("frappe_x1", "movielenslatest_x1") else 1
@@ -181,7 +187,9 @@ def run_experiment(model_name, experiment_id, gpu=-1, dataset_config_dir=None,
                     ffn_out_dim=None, seed=None,
                     embedding_regularizer=None, net_regularizer=None,
                     num_workers=None, metrics=None, use_cosine_lr=None,
-                    double_tokens=None, early_stop_patience=None,
+                    double_tokens=None, use_basis=None, basis_num=None,
+                    block_size=None, seq_ffn_basis_num=None, token_num_after_reshape=None,
+                    early_stop_patience=None,
                     reduce_lr_patience=None,
                     reduce_lr_factor=None, optimizer=None):
                     
@@ -240,6 +248,11 @@ def run_experiment(model_name, experiment_id, gpu=-1, dataset_config_dir=None,
         "metrics": metrics,
         "use_cosine_lr": use_cosine_lr,
         "double_tokens": double_tokens,
+        "use_basis": use_basis,
+        "basis_num": basis_num,
+        "block_size": block_size,
+        "seq_ffn_basis_num": seq_ffn_basis_num,
+        "token_num_after_reshape": token_num_after_reshape,
         "early_stop_patience": early_stop_patience,
         "reduce_lr_patience": reduce_lr_patience,
         "reduce_lr_factor": reduce_lr_factor,
@@ -503,6 +516,17 @@ def main():
     parser.add_argument('--double_tokens', type=lambda x: x.lower() in ('true', '1', 'yes'),
                         default=argparse.SUPPRESS,
                         help='Double token count by split/reshape after embedding')
+    parser.add_argument('--use_basis', type=lambda x: x.lower() in ('true', '1', 'yes'),
+                        default=argparse.SUPPRESS,
+                        help='Use basis-weighted spherical SwishGLU for parameter efficiency')
+    parser.add_argument('--basis_num', type=int, default=argparse.SUPPRESS,
+                        help='Number of basis matrices when use_basis=True (common: 8)')
+    parser.add_argument('--block_size', type=int, default=argparse.SUPPRESS,
+                        help='Chunk size for token re-partitioning in UniMixerBlock (common: 32)')
+    parser.add_argument('--seq_ffn_basis_num', type=int, default=argparse.SUPPRESS,
+                        help='Number of basis matrices for local interaction W (common: 4)')
+    parser.add_argument('--token_num_after_reshape', type=int, default=argparse.SUPPRESS,
+                        help='Hidden dimension of the global FFN inside UniMixerBlock (common: total_dim//block_size)')
     args = parser.parse_args()
     
     if args.expid:
@@ -522,7 +546,9 @@ def main():
         "attention_dropout", "embedding_dropout", "learning_rate",
         "embedding_dim", "ffn_in_dim", "ffn_out_dim", "seed", "embedding_regularizer",
         "net_regularizer", "num_workers", "metrics", "use_cosine_lr",
-        "double_tokens", "early_stop_patience", "reduce_lr_patience",
+        "double_tokens", "use_basis", "basis_num",
+        "block_size", "seq_ffn_basis_num", "token_num_after_reshape",
+        "early_stop_patience", "reduce_lr_patience",
         "reduce_lr_factor", "optimizer",
     ]:
         if hasattr(args, key):
