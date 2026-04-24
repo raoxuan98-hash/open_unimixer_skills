@@ -202,6 +202,7 @@ class UniMixerNormLayer(nn.Module):
 
         if token_num_after_reshape is None:
             token_num_after_reshape = total_dim // block_size
+            
         if seq_ffn_basis_num is None:
             seq_ffn_basis_num = 4
 
@@ -241,6 +242,7 @@ class UniMixerNormLayer(nn.Module):
             alpha_init=0.05,
             gate_type="token_wise",
         )
+
         self.feature_residual = NormalizedResidualUpdate(
             num_tokens=seq_len,
             in_dim=d_model,
@@ -256,22 +258,13 @@ class UniMixerNormLayer(nn.Module):
             out: [B, T, D]
         """
         # ---- Sub-layer 1: sequence-mixer (spherical pre-norm) ----
-        if isinstance(self.seq_mixer, UniMixerBlock):
-            # UniMixerBlock: token 重新划分 + 局部变换 + 全局 FFN
-            B, T, D = src.shape
-            src2 = src.reshape(B, T * D)
-            src2 = self.seq_mixer(src2)
-            src2 = src2.view(B, T, D)
-            src2 = F.normalize(src2, p=2, dim=-1)
-        else:
-            # 旧的 sequence-mixer: transpose + per-token SwishGLU
-            # transpose so that feature dim becomes "token positions" and seq dim becomes "features"
-            src2 = src.transpose(1, 2)                # [B, D, T]
-            src2 = F.normalize(src2, p=2, dim=-1)          # L2 norm on the new token dim
-            src2 = self.seq_mixer(src2)                    # [B, D, T]
-            src2 = src2.transpose(1, 2)                    # [B, T, D]
-            src2 = F.normalize(src2, p=2, dim=-1)          # L2 norm on the token dim
-        src = self.seq_residual(src, src2)             # sigmoid-gated residual + L2 norm
+        # UniMixerBlock: token 重新划分 + 局部变换 + 全局线性变换
+        B, T, D = src.shape
+        src2 = src.reshape(B, T * D)
+        src2 = self.seq_mixer(src2)
+        src2 = src2.view(B, T, D)
+        src2 = F.normalize(src2, p=2, dim=-1)
+
         # ---- Sub-layer 2: feature-mixer (spherical pre-norm) ----
         src2 = self.feature_mixer(src)            # [B, T, D]
         src = self.feature_residual(src, src2)         # sigmoid-gated residual + L2 norm
